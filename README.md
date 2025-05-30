@@ -1,14 +1,15 @@
 # Automating EBS Snapshot Cleanup with AWS Lambda for Cost Efficiency
 
-## 📘 Overview
+##  Overview
 
 In AWS, developers often create EC2 instances with attached EBS volumes and take snapshots for backup. However, snapshots can accumulate if not deleted after the associated instance or volume is removed — leading to unnecessary costs.
 
 This project uses **AWS Lambda** to automatically detect and delete unused EBS snapshots. It runs on a schedule using **Amazon CloudWatch (EventBridge)**, enabling a fully serverless and automated cleanup process.
 
----
+![image](https://github.com/user-attachments/assets/3b4c5a60-ea1a-4fa7-9776-b5459fc7ff54)
 
-## 🛠️ Services Used
+
+##  Services Used
 
 * **AWS Lambda** – Serverless compute for automation logic
 * **Amazon EC2** – Virtual machines in the cloud
@@ -16,7 +17,6 @@ This project uses **AWS Lambda** to automatically detect and delete unused EBS s
 * **Amazon CloudWatch (EventBridge)** – Scheduled or event-driven triggers
 * **IAM** – Role-based access and permissions
 
----
 
 ## 🚀 What is AWS Lambda?
 
@@ -29,9 +29,8 @@ This project uses **AWS Lambda** to automatically detect and delete unused EBS s
 * **Multi-language support**: Python, Node.js, Java, and more
 * **Use Cases**: Automation, event handling, serverless APIs
 
----
 
-## 💡 What is EC2 and EBS?
+##  What is EC2 and EBS?
 
 ### EC2 (Elastic Compute Cloud):
 
@@ -58,9 +57,8 @@ This project uses **AWS Lambda** to automatically detect and delete unused EBS s
 * Useful for disaster recovery and volume cloning
 * Stored internally in S3
 
----
 
-## 🧩 Architecture Overview
+##  Architecture Overview
 
 **High-Level Flow:**
 
@@ -70,9 +68,8 @@ This project uses **AWS Lambda** to automatically detect and delete unused EBS s
 4. Lambda function identifies unused snapshots
 5. Lambda deletes the snapshots
 
----
 
-## 🛠️ Implementation Steps
+##  Implementation Steps
 
 ### 1. Create EC2 instance and attach volume
 
@@ -83,24 +80,34 @@ This project uses **AWS Lambda** to automatically detect and delete unused EBS s
 * **Language**: Python
 * **Library**: boto3 (AWS SDK for Python)
 
+![image](https://github.com/user-attachments/assets/aab258a1-5b20-4f8f-81ad-dcd7b78ff9e9)
+
+
 ### 4. Deploy Lambda Function and Set Timeout
 
 * Increase timeout from default (3s) to 10 seconds or more.
 
+![image](https://github.com/user-attachments/assets/0349b16b-c5be-4281-a822-7eac05e082ea)
+
+
 ### 5. Set IAM Permissions
 
 Add the following permissions to your Lambda role:
-
+Create inline policies or attach a custom policy with these permissions.
 * `ec2:DescribeSnapshots`
 * `ec2:DeleteSnapshot`
 * `ec2:DescribeInstances`
 * `ec2:DescribeVolumes`
 
-Create inline policies or attach a custom policy with these permissions.
+![image](https://github.com/user-attachments/assets/91f16388-2627-4045-9348-7b8378d75a14)
 
----
 
-## ✅ Testing
+
+##  Testing
+
+![image](https://github.com/user-attachments/assets/a4643fcf-f24f-4c68-9b5b-1a4b112c26dc)
+![image](https://github.com/user-attachments/assets/7f7605a1-83ee-4cb6-ab1f-f3cb9597c1fe)
+
 
 ### Scenario:
 
@@ -116,13 +123,16 @@ Lambda detected unused snapshot and deleted it successfully:
 Deleted EBS snapshot snap-0dc087971719a44b9 as its associated volume was not found.
 ```
 
----
+![image](https://github.com/user-attachments/assets/df3313b5-2ad0-4eda-9f3a-7c3c76d7b014)
 
-## 🔄 Automating Snapshot Deletion Using EventBridge
+##  Automating Snapshot Deletion Using EventBridge
 
 ### Setup:
 
 Instead of scheduled cleanup, you can trigger Lambda immediately upon instance termination.
+
+![image](https://github.com/user-attachments/assets/44603f16-e6cb-4fe6-9935-25c407ec66a0)
+
 
 ### Steps:
 
@@ -139,9 +149,10 @@ Instead of scheduled cleanup, you can trigger Lambda immediately upon instance t
 
 When an EC2 instance is terminated, the Lambda function automatically deletes associated volumes and snapshots.
 
----
+![image](https://github.com/user-attachments/assets/fad4297c-35e1-4ebf-963a-50b1b6a247be)
 
-## 💰 Outcome
+
+##  Outcome
 
 By automating snapshot cleanup:
 
@@ -149,9 +160,8 @@ By automating snapshot cleanup:
 * Ensure a **clean and optimized** cloud environment.
 * Eliminate manual cleanup, especially helpful in large environments.
 
----
 
-## 📌 Future Improvements
+##  Future Improvements
 
 * Add tagging logic to exclude important snapshots from deletion
 * Send email notifications for deleted snapshots via Amazon SES
