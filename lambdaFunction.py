@@ -1,4 +1,3 @@
-```python
 import boto3
 
 def lambda_handler(event, context):
@@ -35,4 +34,4 @@ def lambda_handler(event, context):
                 if e.response['Error']['Code'] == 'InvalidVolume.NotFound':
                     ec2.delete_snapshot(SnapshotId=snapshot_id)
                     print(f"Deleted EBS snapshot {snapshot_id} as its associated volume was not found.")
-```
+
